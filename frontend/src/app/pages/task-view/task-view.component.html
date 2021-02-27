@@ -5,9 +5,11 @@
         Lists
       </h1>
       <div class="list-menu">
-        <a href="" class="list-menu-item">List #1</a>
+        <div *ngFor="let list of (lists$ | async)">
+          <a href="" class="list-menu-item">{{list.title}}</a>
+        </div>
       </div>
-      <button class="button is-primary has-text-white">
+      <button class="button is-primary has-text-white" (click)="createList()">
         + New List
       </button>
     </div>
@@ -15,18 +17,6 @@
       <h1 class="title has-text-primary">
         Tasks
       </h1>
-      <div class="task">
-        <p>Something</p>
-      </div>
-      <div class="task complete">
-        <p>Something</p>
-      </div>
-      <div class="task">
-        <p>Something</p>
-      </div>
-      <div class="task">
-        <p>Something</p>
-      </div>
     </div>
   </div>
 </div>
