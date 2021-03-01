@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ListService} from '../../services/list.service';
-import {Observable} from 'rxjs';
+import {interval, Observable} from 'rxjs';
 import {IList} from '../../interfaces/list.interface';
 import {ITask} from '../../interfaces/task.interface';
 import {TaskService} from '../../services/task.service';
 import {ActivatedRoute, Params} from "@angular/router";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'app-task-view',
   templateUrl: './task-view.component.html',
@@ -25,9 +27,11 @@ export class TaskViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.lists$ = this.list.getLists();
-    this.route.params.subscribe((params: Params) => {
-      this.tasks$ = this.task.getTasks(params.listId);
-    });
+    this.route.params
+      .pipe(untilDestroyed(this))
+      .subscribe((params: Params) => {
+        this.tasks$ = this.task.getTasks(params.listId);
+      });
   }
 
   public createList(): void {
