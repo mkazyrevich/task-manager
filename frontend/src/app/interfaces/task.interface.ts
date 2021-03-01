@@ -1,9 +1,9 @@
-interface ITask {
+export interface ITask {
   title: string;
   _id: string;
-  listId: string;
+  _listId: string;
 }
 
-interface ITaskToAdd {
+export interface ITaskToAdd {
   title: string;
 }
